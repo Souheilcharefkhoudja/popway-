@@ -1,0 +1,451 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Le Braquage — Le Guide Ultime du Fast Food</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@400;600;700;800;900&family=Permanent+Marker&display=swap" rel="stylesheet">
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          'brand-yellow': '#FFD500',
+          'brand-yellow-dim': '#E8C200',
+          'ink': '#0A0A0A',
+          'bg-base': '#0A0A0A',
+        },
+        fontFamily: {
+          sans: ['Inter', 'system-ui', 'sans-serif'],
+          display: ['Outfit', 'system-ui', 'sans-serif'],
+          street: ['"Permanent Marker"', 'cursive'],
+        },
+      }
+    }
+  }
+</script>
+<style>
+  html, body { background: #0A0A0A; }
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    color: #f4f4f4;
+    -webkit-font-smoothing: antialiased;
+    selection-color: #0A0A0A;
+    selection-background-color: #FFD500;
+  }
+  ::selection { background: #FFD500; color: #0A0A0A; }
+
+  .grain::before {
+    content:""; position:absolute; inset:0; pointer-events:none; z-index: 1;
+    background-image: url("data:image/svg+xml;utf8,<svg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.35'/></svg>");
+    opacity: .08; mix-blend-mode: overlay;
+  }
+
+  .drip {
+    background: #FFD500;
+    -webkit-mask: radial-gradient(circle at 20% 100%, transparent 12px, black 13px) 0 0/40px 40px repeat-x,
+                  linear-gradient(black, black);
+    -webkit-mask-composite: source-over;
+  }
+
+  @keyframes float { 0%,100%{transform:translateY(0) rotate(-2deg);} 50%{transform:translateY(-14px) rotate(-2deg);} }
+  .float { animation: float 6s ease-in-out infinite; }
+
+  @keyframes rise { from { opacity:0; transform: translateY(24px); } to { opacity:1; transform:none; } }
+  .rise { animation: rise .9s cubic-bezier(.2,.7,.2,1) both; }
+  .d1 { animation-delay: .1s } .d2 { animation-delay: .25s } .d3 { animation-delay: .4s } .d4 { animation-delay: .55s } .d5 { animation-delay: .7s }
+
+  @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+  .marquee-track { animation: marquee 30s linear infinite; }
+
+  .stroke-text {
+    -webkit-text-stroke: 2px #FFD500;
+    color: transparent;
+  }
+
+  .book-shadow { filter: drop-shadow(0 40px 60px rgba(255,213,0,.25)) drop-shadow(0 20px 30px rgba(0,0,0,.6)); }
+
+  .noise-yellow {
+    background:
+      radial-gradient(1200px 600px at 80% -10%, rgba(255,213,0,.25), transparent 60%),
+      radial-gradient(900px 500px at 10% 110%, rgba(255,213,0,.12), transparent 60%),
+      #0A0A0A;
+  }
+
+  .tape {
+    background: rgba(255,213,0,.85);
+    box-shadow: 0 8px 20px rgba(0,0,0,.35);
+    color:#0A0A0A;
+  }
+
+  .divider-strip {
+    background: repeating-linear-gradient(45deg, #FFD500 0 20px, #0A0A0A 20px 40px);
+  }
+
+  input:-internal-autofill-selected { background: transparent !important; }
+</style>
+</head>
+<body class="min-h-screen bg-bg-base">
+
+<!-- NAV -->
+<nav class="fixed top-0 left-0 w-full z-50 py-5 md:py-7 bg-gradient-to-b from-black/80 to-transparent backdrop-blur-[6px]">
+  <div class="max-w-7xl mx-auto grid grid-cols-12 items-center px-6 md:px-10">
+    <div class="col-span-6 md:col-span-3 flex items-center gap-3">
+      <div class="w-9 h-9 rounded-full bg-brand-yellow flex items-center justify-center">
+        <span class="font-street text-ink text-lg leading-none">P</span>
+      </div>
+      <span class="font-display font-black text-xl tracking-tight text-white">poP<span class="text-brand-yellow">'</span>way</span>
+    </div>
+    <div class="hidden md:flex col-span-6 justify-center gap-8 text-[13px] lowercase text-white/70">
+      <a class="hover:text-brand-yellow transition" href="#chapitres">chapitres</a>
+      <a class="hover:text-brand-yellow transition" href="#auteur">l'auteur</a>
+      <a class="hover:text-brand-yellow transition" href="#temoignages">témoignages</a>
+      <a class="hover:text-brand-yellow transition" href="#prix">le prix</a>
+    </div>
+    <div class="col-span-6 md:col-span-3 flex justify-end items-center gap-4">
+      <a href="#prix" class="hidden md:inline text-[13px] text-white/70 hover:text-white">acheter →</a>
+      <a href="#prix" class="bg-brand-yellow text-ink font-semibold px-5 py-2.5 rounded-full text-[13px] hover:bg-white transition">obtenir le guide →</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="relative min-h-[100vh] w-full flex flex-col items-center justify-center overflow-hidden noise-yellow grain pt-28 pb-16">
+  <!-- huge street background text -->
+  <div aria-hidden="true" class="absolute inset-0 flex items-center justify-center pointer-events-none select-none">
+    <span class="font-street text-[26vw] leading-none stroke-text opacity-40 -rotate-3">BRAQUAGE</span>
+  </div>
+
+  <div class="max-w-7xl w-full mx-auto px-6 md:px-12 relative z-10 grid grid-cols-12 gap-6 items-center">
+    <!-- LEFT copy -->
+    <div class="col-span-12 md:col-span-7">
+      <div class="rise d1 inline-flex items-center gap-2 border border-brand-yellow/40 rounded-full px-3 py-1.5 mb-6 bg-black/40">
+        <span class="w-1.5 h-1.5 rounded-full bg-brand-yellow animate-pulse"></span>
+        <span class="text-[11px] uppercase tracking-[0.2em] text-brand-yellow">Édition limitée · 2026</span>
+      </div>
+
+      <h1 class="rise d2 font-display font-black text-white text-[44px] md:text-[68px] lg:text-[84px] leading-[0.95] tracking-tight">
+        Le <span class="text-brand-yellow">Braquage</span><br/>
+        du Fast Food.
+      </h1>
+
+      <p class="rise d3 mt-6 max-w-xl text-white/70 text-lg md:text-xl leading-relaxed">
+        Le guide ultime — écrit par le fondateur de <span class="text-white font-semibold">PoP'Way</span>, numéro 1 du street food en Algérie. Toutes les méthodes, tous les secrets, aucune théorie inutile.
+      </p>
+
+      <!-- CTA -->
+      <div class="rise d4 mt-8 flex flex-col sm:flex-row gap-3">
+        <a href="#prix" class="group bg-brand-yellow text-ink font-bold px-7 py-4 rounded-full inline-flex items-center gap-3 hover:bg-white transition">
+          Je veux le guide
+          <span class="w-8 h-8 rounded-full bg-ink text-brand-yellow flex items-center justify-center group-hover:translate-x-1 transition">→</span>
+        </a>
+        <a href="#chapitres" class="border border-white/20 text-white/90 font-medium px-7 py-4 rounded-full inline-flex items-center gap-2 hover:border-brand-yellow hover:text-brand-yellow transition">
+          Voir les chapitres
+        </a>
+      </div>
+
+      <!-- proof -->
+      <div class="rise d5 mt-10 flex items-center gap-6 text-white/60 text-sm">
+        <div class="flex -space-x-2">
+          <div class="w-8 h-8 rounded-full bg-brand-yellow border-2 border-black"></div>
+          <div class="w-8 h-8 rounded-full bg-white border-2 border-black"></div>
+          <div class="w-8 h-8 rounded-full bg-brand-yellow border-2 border-black"></div>
+        </div>
+        <div>
+          <div class="text-white font-semibold">+44K abonnés</div>
+          <div class="text-xs">Une communauté qui suit chaque mouvement</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT ebook mockup -->
+    <div class="col-span-12 md:col-span-5 relative flex justify-center">
+      <div class="relative float book-shadow">
+        <!-- book cover -->
+        <div class="relative w-[280px] md:w-[340px] aspect-[3/4] rounded-sm overflow-hidden bg-ink border-l-8 border-brand-yellow-dim">
+          <div class="absolute inset-0 bg-gradient-to-br from-ink via-ink to-black"></div>
+          <div class="absolute inset-0 grain"></div>
+          <div class="absolute top-0 left-0 w-full h-16 divider-strip opacity-60"></div>
+
+          <div class="relative z-10 p-6 h-full flex flex-col justify-between">
+            <div>
+              <div class="text-brand-yellow text-[10px] tracking-[0.25em] uppercase mb-2">Édition Premium · 01</div>
+              <div class="font-street text-brand-yellow text-4xl md:text-5xl leading-none -rotate-2">Le Braquage</div>
+              <div class="font-display font-black text-white text-2xl md:text-3xl mt-3 leading-tight">du Fast Food.</div>
+              <div class="mt-4 text-white/60 text-xs leading-relaxed">Le manuel confidentiel pour dominer la restauration rapide.</div>
+            </div>
+
+            <div class="flex items-end justify-between">
+              <div>
+                <div class="text-[9px] text-white/40 uppercase tracking-widest">Par le fondateur</div>
+                <div class="font-display font-bold text-white text-sm">PoP'Way</div>
+              </div>
+              <div class="w-10 h-10 rounded-full bg-brand-yellow flex items-center justify-center">
+                <span class="font-street text-ink text-lg">P</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- sticker -->
+        <div class="absolute -top-6 -right-6 w-20 h-20 rounded-full bg-brand-yellow text-ink flex flex-col items-center justify-center rotate-12 shadow-xl">
+          <span class="text-[9px] font-bold uppercase tracking-wider">Nouveau</span>
+          <span class="font-display font-black text-lg leading-none mt-0.5">2026</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- corners -->
+  <div class="absolute bottom-6 left-6 text-white/40 text-xs tracking-widest uppercase z-10">© PoP'Way — 2026</div>
+  <div class="absolute bottom-6 right-6 text-white/40 text-xs tracking-widest uppercase z-10">Édition · FR</div>
+</section>
+
+<!-- MARQUEE -->
+<div class="relative overflow-hidden bg-brand-yellow text-ink py-4 border-y-2 border-ink">
+  <div class="marquee-track flex whitespace-nowrap font-street text-2xl md:text-3xl">
+    <div class="flex gap-10 pr-10">
+      <span>★ Marges maximales</span><span>★ Concept qui vend</span><span>★ Marketing de rue</span><span>★ Recettes signature</span><span>★ Franchise scalable</span><span>★ Cuisine optimisée</span><span>★ Équipe de guerriers</span>
+    </div>
+    <div class="flex gap-10 pr-10">
+      <span>★ Marges maximales</span><span>★ Concept qui vend</span><span>★ Marketing de rue</span><span>★ Recettes signature</span><span>★ Franchise scalable</span><span>★ Cuisine optimisée</span><span>★ Équipe de guerriers</span>
+    </div>
+  </div>
+</div>
+
+<!-- POURQUOI -->
+<section class="relative py-24 md:py-32 px-6 md:px-12">
+  <div class="max-w-6xl mx-auto grid grid-cols-12 gap-8">
+    <div class="col-span-12 md:col-span-5">
+      <div class="text-brand-yellow text-xs uppercase tracking-[0.3em] mb-4">Pourquoi ce guide</div>
+      <h2 class="font-display font-black text-white text-4xl md:text-5xl leading-tight">
+        Ce n'est pas un livre.<br/>
+        <span class="text-brand-yellow">C'est un plan d'attaque.</span>
+      </h2>
+    </div>
+    <div class="col-span-12 md:col-span-7 space-y-6 text-white/70 text-lg leading-relaxed">
+      <p>
+        En 4 ans, on est passés d'un local à <span class="text-white font-semibold">numéro 1 du street food en Algérie</span>. Zéro chance. Zéro héritage. Que du système.
+      </p>
+      <p>
+        Ce guide, c'est ce système. Ce que personne ne t'expliquera dans une formation à 50€. Les vrais leviers : le concept, le branding, les marges, l'équipe, le contenu qui rend viral, la franchise.
+      </p>
+      <p class="text-white font-semibold">
+        Si tu ouvres un fast food sans avoir lu ça — tu joues au loto.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- CHAPITRES -->
+<section id="chapitres" class="relative py-24 md:py-32 px-6 md:px-12 border-t border-white/5">
+  <div class="max-w-6xl mx-auto">
+    <div class="flex items-end justify-between mb-14 flex-wrap gap-4">
+      <div>
+        <div class="text-brand-yellow text-xs uppercase tracking-[0.3em] mb-4">Ce que tu vas apprendre</div>
+        <h2 class="font-display font-black text-white text-4xl md:text-5xl leading-tight">Les 7 chapitres.</h2>
+      </div>
+      <div class="text-white/50 text-sm">+140 pages · lecture 2h</div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <!-- CHAPTER CARD -->
+      <div class="group relative border border-white/10 rounded-2xl p-8 hover:border-brand-yellow transition bg-white/[0.02]">
+        <div class="font-display font-black text-brand-yellow/30 group-hover:text-brand-yellow text-6xl leading-none transition">01</div>
+        <h3 class="font-display font-bold text-white text-2xl mt-3">Le Concept qui Braque</h3>
+        <p class="text-white/60 mt-3 leading-relaxed">Créer une identité qu'on reconnaît à 50 mètres. L'histoire, le nom, la signature visuelle. Comment ne pas être « juste un fast food de plus ».</p>
+      </div>
+      <div class="group relative border border-white/10 rounded-2xl p-8 hover:border-brand-yellow transition bg-white/[0.02]">
+        <div class="font-display font-black text-brand-yellow/30 group-hover:text-brand-yellow text-6xl leading-none transition">02</div>
+        <h3 class="font-display font-bold text-white text-2xl mt-3">La Carte qui Vend</h3>
+        <p class="text-white/60 mt-3 leading-relaxed">Combien de produits ? Quels prix ? La règle du menu 80/20, les combos qui doublent le panier moyen, les produits d'appel qui font entrer les clients.</p>
+      </div>
+      <div class="group relative border border-white/10 rounded-2xl p-8 hover:border-brand-yellow transition bg-white/[0.02]">
+        <div class="font-display font-black text-brand-yellow/30 group-hover:text-brand-yellow text-6xl leading-none transition">03</div>
+        <h3 class="font-display font-bold text-white text-2xl mt-3">Marges & Food Cost</h3>
+        <p class="text-white/60 mt-3 leading-relaxed">Le vrai calcul. Ce que tes fournisseurs te cachent. Comment gagner 30% de plus sur chaque burger sans jamais toucher au prix affiché.</p>
+      </div>
+      <div class="group relative border border-white/10 rounded-2xl p-8 hover:border-brand-yellow transition bg-white/[0.02]">
+        <div class="font-display font-black text-brand-yellow/30 group-hover:text-brand-yellow text-6xl leading-none transition">04</div>
+        <h3 class="font-display font-bold text-white text-2xl mt-3">L'Équipe de Rue</h3>
+        <p class="text-white/60 mt-3 leading-relaxed">Recruter, former, retenir. Comment transformer un job de cuisine en mission. La méthode qui fait que ton personnel ne part jamais.</p>
+      </div>
+      <div class="group relative border border-white/10 rounded-2xl p-8 hover:border-brand-yellow transition bg-white/[0.02]">
+        <div class="font-display font-black text-brand-yellow/30 group-hover:text-brand-yellow text-6xl leading-none transition">05</div>
+        <h3 class="font-display font-bold text-white text-2xl mt-3">Marketing de Rue</h3>
+        <p class="text-white/60 mt-3 leading-relaxed">Instagram, TikTok, campagnes locales. Comment on a fait +44K abonnés sans un centime en pub. Les templates, la fréquence, le ton.</p>
+      </div>
+      <div class="group relative border border-white/10 rounded-2xl p-8 hover:border-brand-yellow transition bg-white/[0.02]">
+        <div class="font-display font-black text-brand-yellow/30 group-hover:text-brand-yellow text-6xl leading-none transition">06</div>
+        <h3 class="font-display font-bold text-white text-2xl mt-3">L'Opération Cuisine</h3>
+        <p class="text-white/60 mt-3 leading-relaxed">Sortir 300 commandes en heure de rush sans jamais baisser la qualité. Le plan de production, les postes, les checklists qui sauvent la soirée.</p>
+      </div>
+      <div class="group relative border border-white/10 rounded-2xl p-8 hover:border-brand-yellow transition md:col-span-2 bg-brand-yellow text-ink">
+        <div class="font-display font-black text-ink/20 text-6xl leading-none">07</div>
+        <h3 class="font-display font-black text-ink text-3xl mt-3">Devenir une Franchise.</h3>
+        <p class="text-ink/80 mt-3 leading-relaxed max-w-2xl">Le chapitre bonus. Comment structurer ton concept pour qu'il se duplique. Contrats, redevances, formation des franchisés — le playbook complet pour passer de 1 à 100 restaurants.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AUTEUR / STATS -->
+<section id="auteur" class="relative py-24 md:py-32 px-6 md:px-12 border-t border-white/5">
+  <div class="max-w-6xl mx-auto grid grid-cols-12 gap-10 items-center">
+    <div class="col-span-12 md:col-span-6">
+      <div class="text-brand-yellow text-xs uppercase tracking-[0.3em] mb-4">L'auteur</div>
+      <h2 class="font-display font-black text-white text-4xl md:text-5xl leading-tight">
+        Écrit par celui qui l'a fait.
+      </h2>
+      <p class="mt-6 text-white/70 text-lg leading-relaxed">
+        Fondateur de <span class="text-brand-yellow font-semibold">PoP'Way</span> — la marque qui a redéfini le street food en Algérie. 158 posts, 44 200 abonnés, 5 restaurants ouverts, 4 en construction, et une file d'attente pour la franchise.
+      </p>
+      <p class="mt-4 text-white/60 leading-relaxed">
+        Aucune formation en école de commerce. Que du terrain, du test, de l'échec, et un système qui fonctionne aujourd'hui à grande échelle.
+      </p>
+    </div>
+    <div class="col-span-12 md:col-span-6 grid grid-cols-2 gap-4">
+      <div class="border border-white/10 rounded-2xl p-6 bg-white/[0.02]">
+        <div class="font-display font-black text-brand-yellow text-5xl">44K</div>
+        <div class="text-white/60 mt-2 text-sm">Abonnés Instagram</div>
+      </div>
+      <div class="border border-white/10 rounded-2xl p-6 bg-white/[0.02]">
+        <div class="font-display font-black text-brand-yellow text-5xl">#1</div>
+        <div class="text-white/60 mt-2 text-sm">Street food en Algérie</div>
+      </div>
+      <div class="border border-white/10 rounded-2xl p-6 bg-white/[0.02]">
+        <div class="font-display font-black text-brand-yellow text-5xl">+4</div>
+        <div class="text-white/60 mt-2 text-sm">Restaurants en cours</div>
+      </div>
+      <div class="border border-white/10 rounded-2xl p-6 bg-brand-yellow text-ink">
+        <div class="font-display font-black text-ink text-5xl">100%</div>
+        <div class="text-ink/70 mt-2 text-sm">Fait maison, aucune théorie</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TEMOIGNAGES -->
+<section id="temoignages" class="relative py-24 md:py-32 px-6 md:px-12 border-t border-white/5">
+  <div class="max-w-6xl mx-auto">
+    <div class="text-brand-yellow text-xs uppercase tracking-[0.3em] mb-4">Ce qu'ils disent</div>
+    <h2 class="font-display font-black text-white text-4xl md:text-5xl leading-tight mb-14">Les premiers lecteurs.</h2>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+      <div class="border border-white/10 rounded-2xl p-8 bg-white/[0.02]">
+        <div class="text-brand-yellow text-4xl leading-none mb-4">"</div>
+        <p class="text-white/80 leading-relaxed">Trois mois après avoir appliqué le chapitre sur les marges, mon food cost est passé de 38% à 27%. Le guide se rembourse en deux semaines.</p>
+        <div class="mt-6 flex items-center gap-3">
+          <div class="w-10 h-10 rounded-full bg-brand-yellow"></div>
+          <div>
+            <div class="text-white font-semibold text-sm">Yanis M.</div>
+            <div class="text-white/50 text-xs">Burger shop · Oran</div>
+          </div>
+        </div>
+      </div>
+      <div class="border border-white/10 rounded-2xl p-8 bg-white/[0.02]">
+        <div class="text-brand-yellow text-4xl leading-none mb-4">"</div>
+        <p class="text-white/80 leading-relaxed">Je pensais ouvrir mon fast food « à l'instinct ». Après ce guide j'ai tout refait — concept, carte, équipe. Aujourd'hui je fais 3x le CA de mes concurrents dans la même rue.</p>
+        <div class="mt-6 flex items-center gap-3">
+          <div class="w-10 h-10 rounded-full bg-brand-yellow"></div>
+          <div>
+            <div class="text-white font-semibold text-sm">Nadia B.</div>
+            <div class="text-white/50 text-xs">Snack · Alger centre</div>
+          </div>
+        </div>
+      </div>
+      <div class="border border-white/10 rounded-2xl p-8 bg-white/[0.02]">
+        <div class="text-brand-yellow text-4xl leading-none mb-4">"</div>
+        <p class="text-white/80 leading-relaxed">Franc, direct, aucun blabla. C'est le seul livre où j'ai souligné une ligne toutes les deux pages. Le chapitre 07 sur la franchise vaut à lui seul le prix du guide.</p>
+        <div class="mt-6 flex items-center gap-3">
+          <div class="w-10 h-10 rounded-full bg-brand-yellow"></div>
+          <div>
+            <div class="text-white font-semibold text-sm">Karim D.</div>
+            <div class="text-white/50 text-xs">Chaîne de tacos · Constantine</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="prix" class="relative py-24 md:py-32 px-6 md:px-12 border-t border-white/5">
+  <div class="max-w-4xl mx-auto text-center">
+    <div class="text-brand-yellow text-xs uppercase tracking-[0.3em] mb-4">Édition limitée</div>
+    <h2 class="font-display font-black text-white text-4xl md:text-6xl leading-tight">L'investissement.</h2>
+    <p class="mt-6 text-white/60 max-w-xl mx-auto">
+      Un seul paiement. Accès à vie. Mises à jour gratuites de toutes les futures éditions.
+    </p>
+
+    <div class="mt-14 relative border-2 border-brand-yellow rounded-3xl p-8 md:p-12 bg-gradient-to-b from-brand-yellow/10 to-transparent overflow-hidden">
+      <div class="absolute -top-4 left-1/2 -translate-x-1/2 tape font-street text-lg px-6 py-1 rotate-1">
+        Édition Premium — 500 exemplaires
+      </div>
+
+      <div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+        <div class="text-left">
+          <div class="text-white/40 text-sm line-through">Prix public : 599€</div>
+          <div class="flex items-baseline gap-3 mt-2">
+            <div class="font-display font-black text-brand-yellow text-7xl md:text-8xl leading-none">297€</div>
+            <div class="text-white/50 text-sm">TTC · paiement unique</div>
+          </div>
+          <div class="mt-4 inline-block bg-brand-yellow text-ink text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">Offre de lancement · -50%</div>
+        </div>
+
+        <ul class="text-left space-y-3 text-white/80">
+          <li class="flex items-start gap-3"><span class="text-brand-yellow mt-1">✓</span> 7 chapitres · +140 pages</li>
+          <li class="flex items-start gap-3"><span class="text-brand-yellow mt-1">✓</span> 12 templates (menu, planning, checklists)</li>
+          <li class="flex items-start gap-3"><span class="text-brand-yellow mt-1">✓</span> Calculateur de food cost inclus</li>
+          <li class="flex items-start gap-3"><span class="text-brand-yellow mt-1">✓</span> Bonus : le playbook franchise</li>
+          <li class="flex items-start gap-3"><span class="text-brand-yellow mt-1">✓</span> Accès à vie + mises à jour</li>
+          <li class="flex items-start gap-3"><span class="text-brand-yellow mt-1">✓</span> Garantie 30 jours satisfait ou remboursé</li>
+        </ul>
+      </div>
+
+      <div class="mt-10">
+        <a href="#" class="group inline-flex items-center gap-3 bg-brand-yellow text-ink font-bold px-10 py-5 rounded-full text-lg hover:bg-white transition">
+          Obtenir mon exemplaire
+          <span class="w-9 h-9 rounded-full bg-ink text-brand-yellow flex items-center justify-center group-hover:translate-x-1 transition">→</span>
+        </a>
+        <div class="text-white/40 text-xs mt-4">Paiement sécurisé · CB, Virement, PayPal</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="relative py-24 md:py-32 px-6 md:px-12 border-t border-white/5">
+  <div class="max-w-4xl mx-auto text-center">
+    <h2 class="font-display font-black text-white text-5xl md:text-7xl leading-[0.95]">
+      Tu peux passer<br/>
+      10 ans à tâtonner.<br/>
+      <span class="text-brand-yellow">Ou lire ce guide.</span>
+    </h2>
+    <a href="#prix" class="mt-10 inline-flex items-center gap-3 bg-brand-yellow text-ink font-bold px-8 py-4 rounded-full hover:bg-white transition">
+      Commencer maintenant →
+    </a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="border-t border-white/5 py-10 px-6 md:px-12">
+  <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4 text-white/40 text-xs">
+    <div class="flex items-center gap-3">
+      <div class="w-7 h-7 rounded-full bg-brand-yellow flex items-center justify-center">
+        <span class="font-street text-ink text-sm">P</span>
+      </div>
+      <span>© 2026 PoP'Way — Tous droits réservés</span>
+    </div>
+    <div class="flex gap-6">
+      <a href="#" class="hover:text-brand-yellow">Mentions légales</a>
+      <a href="#" class="hover:text-brand-yellow">CGV</a>
+      <a href="#" class="hover:text-brand-yellow">Contact</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
